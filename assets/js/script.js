@@ -1,5 +1,7 @@
-var startBtn = document.getElementById('start');
-var timerEl = document.getElementById('countdown');
+var startBtn = document.getElementById('start-button');
+var timerEl = "75";
+var score = 0;
+var body = document.body;
 
 
 var questionArray = [
@@ -44,25 +46,53 @@ var questionArray = [
     }
 ]
 // Countdown Timer function
-function coundown(){
+var countdown = function(){    
+    
     var timeLeft = 75;
-    // hide the button
-    startBtn.style.display = "none";
+        // hide the button
+        console.log("time left " + timeLeft);   
+        console.log("timerEL " + timerEl);   
+        
+        // timer interval to count down each second
+        var timeInterval = setInterval(function(){
+            if(timeLeft > 0){
+                console.log(timeInterval);
+                timerEl.textContent = timeLeft;
+                // timerBox.textContent = timerEl;
+                timeLeft--;
+            } else {
+                timerEl.textContent = "";
+                // timerBox.textContent = timerEl;
+                clearInterval(timeInterval);
 
-    // timer interval to count down each second
-    var timeInterval = setInterval(function(){
-        if(timeLeft > 0){
-            timerEl.textContent = timeLeft;
-            timeLeft--;
-        } else {
-            timerEl.textContent = "";
-            clearInterval(timeInterval);
+            }
 
-        }
-
-    }, 1000);
+        }, 1000);
+        console.log("time left " + timeLeft);   
+        console.log("timerEL " + timerEl);
+        console.log(timeInterval);
 }
 
+// load information when page is opened
+function pageOpen(){
+    var questionBox = document.createElement('div');
+    questionBox.className = "container";
+    body.appendChild(questionBox);
 
+    startBtn = document.createElement('button');
+    startBtn.className = "start-button";
+    startBtn.textContent = "Start Quiz";
+    questionBox.appendChild(startBtn);
+
+    console.log(startBtn);
+
+    var timerBox = document.createElement('div');
+    timerBox.className = "timer-box";
+    timerBox.textContent = timerEl;
+    body.appendChild(timerBox);  
+
+
+}
+pageOpen();
+startBtn.addEventListener("click", countdown);
 // start countdown when button is clicked
-startBtn.onclick = coundown;
