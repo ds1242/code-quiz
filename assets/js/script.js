@@ -1,5 +1,6 @@
 var startBtn = document.getElementById('start-button');
 var timerEl = document.getElementById('countdown');
+var questionLoc = document.getElementById('question-display');
 var score = 0;
 var body = document.body;
 
@@ -45,88 +46,62 @@ var questionArray = [
         d: "var myVariable",
         correct: "D"
     }
-]
-// Countdown Timer function
-// var countdown = function(){   
-//     var timerBox = document.createElement('div');
-//     timerBox.className = "timer-box";
-//     timerBox.id = 'countdown';
-//     timerBox.textContent = timerEl;
-//     body.appendChild(timerBox); 
-//         var timeLeft = 75;
+];
 
-//     // console.log(timerBox);
-//         // hide the button
-//         console.log("time left " + timeLeft);   
-//         console.log("timerEL " + typeof(timerEl));   
-        
-//         // timer interval to count down each second
-//         var timeInterval = setInterval(function(){
-//             if(timeLeft > 1){
-//                 console.log(timeInterval);
-//                 timerEl.textContent = timeLeft;
-//                 // timerBox.textContent = timerEl;
-//                 timeLeft--;
-//             } else {
-//                 timerEl.textContent = "";
-//                 // timerBox.textContent = timerEl;
-//                 clearInterval(timeInterval);
+var loadQuestion = function(questionIndex){
+    // pull in question index and set that index from the questionArray to a variable
+    var question = questionArray[questionIndex].q; 
+    var questionDisplay = document.createElement('div');
+    questionDisplay.className = "question";
+    questionDisplay.textContent = question;
+    questionLoc.appendChild(questionDisplay);
 
-//             }
-
-//         }, 1000);
-        
-//     }
-
-// load information when page is opened
-// function pageOpen(){
-//     var questionBox = document.createElement('div');
-//     questionBox.className = "container";
-//     body.appendChild(questionBox);
-
-//     startBtn = document.createElement('button');
-//     startBtn.className = "start-button";
-//     startBtn.textContent = "Start Quiz";
-//     questionBox.appendChild(startBtn);
-
-//     console.log(startBtn);
-
-    // var timerBox = document.createElement('div');
-    // timerBox.className = "timer-box";
-    // timerBox.id = 'countdown';
-    // body.appendChild(timerBox);  
-
-
-// }
-// pageOpen();
-
-var countdown = function(){
-    var timeLeft = 5;
+    // question[i].q.innerHTML = "<p>" + question[questionIndex].q + "</p>"
+    
+    
+};
+var timerBoxCreation = function(){
     var timerBox = document.createElement('div');
     timerBox.className = "timer-box";
-    // timerBox.setAttribute("id", "countdown")
     body.appendChild(timerBox);  
     var timerBoxH1 = document.createElement('h1');
     timerBoxH1.setAttribute("id", "countdown");
     timerBox.appendChild(timerBoxH1);
-    
+
+    return timerBoxH1;
+}
+
+var gameStart = function(){
+    var btnHide = document.getElementById("start-button");
+    btnHide.style.display = "none";
+
+    // set start time
+    var timeLeft = 5;
+    // create timer box and store in variable
+    var timerBox = timerBoxCreation();
+    // define timerEl
     var timerEl = document.getElementById('countdown');
     //  timer interval to count down each second
         var timeInterval = setInterval(function(){
             if(timeLeft > 0){
-                console.log(timeInterval);
-                console.log(typeof(timeInterval));
+                console.log(timeLeft);
                 timerEl.textContent = timeLeft;
-                timerBoxH1.textContent = timeLeft;
+                timerBox.textContent = timeLeft;
                 timeLeft--;
             } else {
                 timerEl.textContent = "";
-                timerBoxH1.textContent = timeLeft;
+                timerBox.textContent = timeLeft;
                 clearInterval(timeInterval);
                 console.log("timerel is done " +timerEl);
             }
 
         }, 1000);
+
+
+    for(var i = 0; i < questionArray.length; i++){
+       loadQuestion(i);
+       console.log(loadQuestion[i]);
+    }
 }
-startBtn.addEventListener("click", countdown);
+startBtn.addEventListener("click", gameStart);
 // start countdown when button is clicked
