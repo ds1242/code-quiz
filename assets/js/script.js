@@ -48,17 +48,32 @@ var questionArray = [
     }
 ];
 
-var loadQuestion = function(questionIndex){
-    // pull in question index and set that index from the questionArray to a variable
-    var question = questionArray[questionIndex].q; 
-    var questionDisplay = document.createElement('div');
-    questionDisplay.className = "question";
-    questionDisplay.textContent = question;
-    questionLoc.appendChild(questionDisplay);
+var loadQuestion = function(i){
+    var question = [];
+    
+    question[i] = questionArray[i].q;           
+    questionLoc.textContent = question[i];
+      
+    var btn = document.createElement("button");
+    var btnText = document.createTextNode(questionArray[i].a);
+    var btn2 = document.createElement("button");
+    var btnText2 = document.createTextNode(questionArray[i].b);
+    var btn3 = document.createElement("button");
+    var btnText3 = document.createTextNode(questionArray[i].c);
+    var btn4 = document.createElement("button");
+    var btnText4 = document.createTextNode(questionArray[i].d);
 
-    // question[i].q.innerHTML = "<p>" + question[questionIndex].q + "</p>"
-    
-    
+
+    btn.appendChild(btnText);
+    questionLoc.appendChild(btn);
+
+    btn2.appendChild(btnText2);
+    questionLoc.appendChild(btn2);
+    btn3.appendChild(btnText3);
+    questionLoc.appendChild(btn3);
+    btn4.appendChild(btnText4);
+    questionLoc.appendChild(btn4); 
+       
 };
 var timerBoxCreation = function(){
     var timerBox = document.createElement('div');
@@ -74,9 +89,9 @@ var timerBoxCreation = function(){
 var gameStart = function(){
     var btnHide = document.getElementById("start-button");
     btnHide.style.display = "none";
-
+    
     // set start time
-    var timeLeft = 5;
+    var timeLeft = 75;
     // create timer box and store in variable
     var timerBox = timerBoxCreation();
     // define timerEl
@@ -87,6 +102,9 @@ var gameStart = function(){
                 console.log(timeLeft);
                 timerEl.textContent = timeLeft;
                 timerBox.textContent = timeLeft;
+                for(var i = 0; i < questionArray.length; i++){
+                    loadQuestion(i);
+                }
                 timeLeft--;
             } else {
                 timerEl.textContent = "";
@@ -98,10 +116,7 @@ var gameStart = function(){
         }, 1000);
 
 
-    for(var i = 0; i < questionArray.length; i++){
-       loadQuestion(i);
-       console.log(loadQuestion[i]);
-    }
+    
 }
 startBtn.addEventListener("click", gameStart);
 // start countdown when button is clicked
