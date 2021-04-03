@@ -47,53 +47,56 @@ var questionArray = [
         correct: "D"
     }
 ];
-var answerCheck = function(){
-    // var answer = document.querySelector("")
-    if(answer === questionArray[i].correct){
-        return true;
-    } else {
+// var answerCheck = function(){
+//     // var answer = document.querySelector("")
+//     var answer = document.getElementById("id");
+//     console.log(answer);
+    
+//     // if(answer === questionArray[i].correct){
+//     //     return true;
+//     // } else {
         
-        return false;
-    }
-}
+//     //     return false;
+//     // }
+// }
 var loadQuestion = function(i){
+    
     var question = [];
     
     question[i] = questionArray[i].q;           
     questionLoc.textContent = question[i];
-      
+    
+
     var btn = document.createElement("button");
-    var btnText = document.createTextNode(questionArray[i].a);
-    btn.addEventListener("click", answerCheck);
+    btn.textContent = questionArray[i].a;
     btn.className = "start-button";
-    btn.setAttribute("id", "button1");
+    btn.setAttribute("id", questionArray[i].a)
+    btn.addEventListener("click", function(){
+        console.log(btn.querySelector("id"));
+    });
+
     var btn2 = document.createElement("button");
-    var btnText2 = document.createTextNode(questionArray[i].b);
-    btn2.addEventListener("click", answerCheck);
+    btn2.textContent = questionArray[i].b;    
     btn2.className = "start-button";
-    btn2.setAttribute("id", "button2");
+    btn2.setAttribute("id", questionArray[i].b);
+    // btn2.addEventListener("click", answerCheck);
+   
     var btn3 = document.createElement("button");
-    var btnText3 = document.createTextNode(questionArray[i].c);
-    btn3.addEventListener("click", answerCheck);
+    btn3.textContent = questionArray[i].c;
     btn3.className = "start-button";
-    btn3.setAttribute("id", "button3");
+    btn3.setAttribute("id", questionArray[i].c);
+    // btn3.addEventListener("click", answerCheck);
+    
     var btn4 = document.createElement("button");
-    var btnText4 = document.createTextNode(questionArray[i].d);
-    btn4.addEventListener("click", answerCheck);
+    btn4.textContent = questionArray[i].d;
     btn4.className = "start-button";
-    btn4.setAttribute("id", "button4");
-
-
-    btn.appendChild(btnText);
-    questionLoc.appendChild(btn);
-
-    btn2.appendChild(btnText2);
-    questionLoc.appendChild(btn2);
-    btn3.appendChild(btnText3);
-    questionLoc.appendChild(btn3);
-    btn4.appendChild(btnText4);
-    questionLoc.appendChild(btn4); 
-       
+    btn4.setAttribute("id", questionArray[i].d);
+    // btn4.addEventListener("click", answerCheck);
+   
+    questionLoc.appendChild(btn);  
+    questionLoc.appendChild(btn2); 
+    questionLoc.appendChild(btn3); 
+    questionLoc.appendChild(btn4);        
 };
 var timerBoxCreation = function(){
     var timerBox = document.createElement('div');
@@ -123,8 +126,11 @@ var gameStart = function(){
                 timerEl.textContent = timeLeft;
                 timerBox.textContent = timeLeft;
                 
-                for(var i = 0; i < questionArray.length; i++){
+                for(var i = 0; i < questionArray.length;i++){
                     loadQuestion(i);
+                    // console.log(question);
+                    
+
                 }
                 timeLeft--;
             } else {
