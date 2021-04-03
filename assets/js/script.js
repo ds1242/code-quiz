@@ -12,7 +12,7 @@ var questionArray = [
         b: "String",
         c: "Asterisk",
         d: "Object",
-        correct: "C"
+        correct: "Asterisk"
     },
     {
         q: "Which is an advantage of using JavaScript?",
@@ -20,7 +20,7 @@ var questionArray = [
         b: " Immediate feedback to the visitors",
         c: "Increased Interactivity",
         d: "All of the above",
-        correct: "D"
+        correct: "All of the above"
     },
     {
         q:"Which built in method returns the string converted to upper case?",
@@ -28,7 +28,7 @@ var questionArray = [
         b: "toUpperCase()",
         c: "capitalizeString()",
         d: "All of the above",
-        correct: "B"
+        correct: "toUpperCase()"
     },
     {
         q: "How does a FOR loop start?",
@@ -36,7 +36,7 @@ var questionArray = [
         b: "for(var i = 0; i < 5; i++)",
         c: "for(i = 0; i < 5)",
         d: "for i = 1 to 5",
-        correct: "B"
+        correct: "for(var i = 0; i < 5; i++)"
     },
     {
         q: "How do you declare a variable in Javacript?",
@@ -44,7 +44,7 @@ var questionArray = [
         b: "v myVariable",
         c: "myVariable",
         d: "var myVariable",
-        correct: "D"
+        correct: "v = 1"
     }
 ];
 // var answerCheck = function(){
@@ -72,31 +72,46 @@ var loadQuestion = function(i){
     btn.className = "start-button";
     btn.setAttribute("id", questionArray[i].a)
     btn.addEventListener("click", function(){
-        console.log(btn.querySelector("id"));
+        console.log(btn.textContent);
+        console.log(questionArray[i].correct);
+        if(questionArray[i].a === questionArray[i].correct){
+            alert("correct!")
+        } else {
+            alert("wrong");
+        }
     });
+    questionLoc.appendChild(btn);  
 
     var btn2 = document.createElement("button");
     btn2.textContent = questionArray[i].b;    
     btn2.className = "start-button";
     btn2.setAttribute("id", questionArray[i].b);
-    // btn2.addEventListener("click", answerCheck);
-   
+    btn2.addEventListener("click", function(){
+        console.log(btn2.textContent);
+    });
+    questionLoc.appendChild(btn2); 
+
     var btn3 = document.createElement("button");
     btn3.textContent = questionArray[i].c;
     btn3.className = "start-button";
     btn3.setAttribute("id", questionArray[i].c);
-    // btn3.addEventListener("click", answerCheck);
-    
+    btn3.addEventListener("click", function(){
+        console.log(btn3.textContent);
+    });
+    questionLoc.appendChild(btn3); 
+
     var btn4 = document.createElement("button");
     btn4.textContent = questionArray[i].d;
     btn4.className = "start-button";
     btn4.setAttribute("id", questionArray[i].d);
-    // btn4.addEventListener("click", answerCheck);
-   
-    questionLoc.appendChild(btn);  
-    questionLoc.appendChild(btn2); 
-    questionLoc.appendChild(btn3); 
-    questionLoc.appendChild(btn4);        
+    btn4.addEventListener("click", function(){
+        console.log(btn4.questionArray[i]);
+    });
+    questionLoc.appendChild(btn4);
+    
+    
+    
+            
 };
 var timerBoxCreation = function(){
     var timerBox = document.createElement('div');
@@ -126,7 +141,7 @@ var gameStart = function(){
                 timerEl.textContent = timeLeft;
                 timerBox.textContent = timeLeft;
                 
-                for(var i = 0; i < questionArray.length;i++){
+                for(let i = 0; i < questionArray.length;i++){
                     loadQuestion(i);
                     // console.log(question);
                     
