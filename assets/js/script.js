@@ -52,11 +52,11 @@ var answerCheck = function(event, correctAnswer){
     var click = event.target.textContent
     console.log("the click value is " + click)
     if(click === correctAnswer){            
-        answerCheck = "correct";
-        return answerCheck;
+        goodBad= "correct";
+        return goodBad;
     } else {        
-        answerCheck = "wrong";
-        return answerCheck;       
+        goodBad = "wrong";
+        return goodBad;       
         
     }
 }
@@ -76,7 +76,7 @@ var loadQuestion = function(i){
     btn.addEventListener("click", function(event){
         var result = answerCheck(event, questionArray[i].correct);
         console.log("the result is " + result);
-        return result;
+        // return result;
         // if(questionArray[i].a === questionArray[i].correct){
             
         //     answerCheck = "correct";
@@ -120,7 +120,7 @@ var loadQuestion = function(i){
     btn3.addEventListener("click", function(event){
         var result = answerCheck(event, questionArray[i].correct);
         console.log("the result is " + result);
-        return result;
+        // return result;
     // function(){
     //     console.log(btn3.textContent);
     //     if(questionArray[i].c === questionArray[i].correct){
@@ -141,7 +141,7 @@ var loadQuestion = function(i){
     btn4.addEventListener("click", function(event){
         var result = answerCheck(event, questionArray[i].correct);
         console.log("the result is " + result);
-        return result;
+        // return result;
     // function(){
     //     console.log(btn4.textContent);
     //     if(questionArray[i].d === questionArray[i].correct){
@@ -177,34 +177,67 @@ var gameStart = function(){
     var timeLeft = 75;
     // create timer box and store in variable
     var timerBox = timerBoxCreation();
+    var i = 0;
     // define timerEl
     var timerEl = document.getElementById('countdown');
     //  timer interval to count down each second
         var timeInterval = setInterval(function(){
+            
             if(timeLeft > 0){
                 console.log(timeLeft);
                 timerEl.textContent = timeLeft;
                 timerBox.textContent = timeLeft;
-                                
-                for(let i = 0; i < questionArray.length;i++){
-                    loadQuestion(i)
-                    if(answerCheck === "correct"){
-                        alert("correct");
-                    } else if(answerCheck === "wrong"){
-                        timeLeft = timeLeft - 10;
-                    }                
+                timeLeft--;              
+                // for(let i = 0; i < questionArray.length;i++){
+                if(i < questionArray.length){
+                loadQuestion(i)   
+                console.log("goodBad in gameStart" + goodBad);
 
+                if(goodBad === "correct"){
+                    
+                    i++;
+                    score++;
+                    goodBad = "";
+                    console.log("score " + score);
+                } else if(goodBad === "wrong"){
+                    timeLeft = timeLeft-10;
+                    goodBad = "";
+                    i++
                 }
-                timeLeft--;
+            } else {
+                timeLeft = 0;
+            }
+
+                
+                // console.log("answer = " + answer);  
+                    // for(var i = 0; i < questionArray.length; i++){
+                    //     loadQuestion(i)
+                    //         
+                    //         debugger;
+                    //         if(goodBad === "correct"){
+                    //             alert("correct");
+                                
+                                
+                    //         } else if(goodBad === "wrong"){
+                    //             timeLeft = timeLeft - 10;
+                                
+                                
+                    //         }   
+                    //     ;
+                                    
+                    // }
+                
+                
+               
             } else {
                 timerEl.textContent = "";
                 timerBox.textContent = timeLeft;
                 clearInterval(timeInterval);
                 console.log("timerel is done " +timerEl);
             }
-
+            
         }, 1000);
-
+        
 
     
 }
