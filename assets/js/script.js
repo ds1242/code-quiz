@@ -2,6 +2,7 @@ var startBtn = document.getElementById('start-button');
 var timerEl = document.getElementById('countdown');
 var questionLoc = document.getElementById('question-display');
 var score = 0;
+var goodBad = "";
 var body = document.body;
 
 
@@ -47,15 +48,19 @@ var questionArray = [
         correct: "var myVariable"
     }
 ];
-var answerCheck = function(x,i){
-    if(x === questionArray[i].correct){
-        alert("correct!")
-        // break;
-    } else {
-        alert("wrong");
-        // break;
+var answerCheck = function(event, correctAnswer){
+    var click = event.target.textContent
+    console.log("the click value is " + click)
+    if(click === correctAnswer){            
+        answerCheck = "correct";
+        return answerCheck;
+    } else {        
+        answerCheck = "wrong";
+        return answerCheck;       
+        
     }
 }
+
 var loadQuestion = function(i){
     
     var question = [];
@@ -68,22 +73,22 @@ var loadQuestion = function(i){
     btn.textContent = questionArray[i].a;
     btn.className = "start-button";
     btn.setAttribute("id", questionArray[i].a)
-    btn.addEventListener("click", function(){
-        console.log(btn.textContent);
-        if(questionArray[i].c === questionArray[i].correct){
-            alert("correct!")
-        } else {
-            alert("wrong");
-        }
-    // function(){
-    //     console.log(btn.textContent);
-    //     console.log(questionArray[i].correct);
-    //     if(questionArray[i].a === questionArray[i].correct){
-    //         alert("correct!")
-    //     } else {
-    //         alert("wrong");
-    //     }
-    // }
+    btn.addEventListener("click", function(event){
+        var result = answerCheck(event, questionArray[i].correct);
+        console.log("the result is " + result);
+        return result;
+        // if(questionArray[i].a === questionArray[i].correct){
+            
+        //     answerCheck = "correct";
+        //     return answerCheck;
+        // } else {
+            
+        //     answerCheck = "wrong";
+        //     return answerCheck;
+            
+            
+        // }
+   
     });
     questionLoc.appendChild(btn);  
 
@@ -91,13 +96,20 @@ var loadQuestion = function(i){
     btn2.textContent = questionArray[i].b;    
     btn2.className = "start-button";
     btn2.setAttribute("id", questionArray[i].b);
-    btn2.addEventListener("click", function(){
-        console.log(btn2.textContent);
-        if(questionArray[i].b === questionArray[i].correct){
-            alert("correct!")
-        } else {
-            alert("wrong");
-        }
+    btn2.addEventListener("click", function(event){
+        var result = answerCheck(event, questionArray[i].correct);
+        console.log("the result is " + result);
+        return result;
+    // function(){
+    //     console.log(btn2.textContent);
+    //     if(questionArray[i].b === questionArray[i].correct){
+            
+    //         answerCheck = "correct";
+    //         return answerCheck;
+    //     } else {
+    //         answerCheck = "wrong";
+    //         return answerCheck;
+    //     }
     });
     questionLoc.appendChild(btn2); 
 
@@ -105,13 +117,20 @@ var loadQuestion = function(i){
     btn3.textContent = questionArray[i].c;
     btn3.className = "start-button";
     btn3.setAttribute("id", questionArray[i].c);
-    btn3.addEventListener("click", function(){
-        console.log(btn3.textContent);
-        if(questionArray[i].c === questionArray[i].correct){
-            alert("correct!")
-        } else {
-            alert("wrong");
-        }
+    btn3.addEventListener("click", function(event){
+        var result = answerCheck(event, questionArray[i].correct);
+        console.log("the result is " + result);
+        return result;
+    // function(){
+    //     console.log(btn3.textContent);
+    //     if(questionArray[i].c === questionArray[i].correct){
+            
+    //         answerCheck = "correct";
+    //         return answerCheck;
+    //     } else {
+    //         answerCheck = "wrong";
+    //         return answerCheck;
+    //     }
     });
     questionLoc.appendChild(btn3); 
 
@@ -119,13 +138,19 @@ var loadQuestion = function(i){
     btn4.textContent = questionArray[i].d;
     btn4.className = "start-button";
     btn4.setAttribute("id", questionArray[i].d);
-    btn4.addEventListener("click", function(){
-        console.log(btn4.textContent);
-        if(questionArray[i].d === questionArray[i].correct){
-            alert("correct!")
-        } else {
-            alert("wrong");
-        }
+    btn4.addEventListener("click", function(event){
+        var result = answerCheck(event, questionArray[i].correct);
+        console.log("the result is " + result);
+        return result;
+    // function(){
+    //     console.log(btn4.textContent);
+    //     if(questionArray[i].d === questionArray[i].correct){
+    //         answerCheck = "correct";
+    //         return answerCheck;
+    //     } else {
+    //         answerCheck = "wrong";
+    //         return answerCheck;
+    //     }
     });
     questionLoc.appendChild(btn4);
     
@@ -160,11 +185,14 @@ var gameStart = function(){
                 console.log(timeLeft);
                 timerEl.textContent = timeLeft;
                 timerBox.textContent = timeLeft;
-                
+                                
                 for(let i = 0; i < questionArray.length;i++){
-                    loadQuestion(i);
-                    // console.log(question);
-                    
+                    loadQuestion(i)
+                    if(answerCheck === "correct"){
+                        alert("correct");
+                    } else if(answerCheck === "wrong"){
+                        timeLeft = timeLeft - 10;
+                    }                
 
                 }
                 timeLeft--;
