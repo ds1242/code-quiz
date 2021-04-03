@@ -44,21 +44,18 @@ var questionArray = [
         b: "v myVariable",
         c: "myVariable",
         d: "var myVariable",
-        correct: "v = 1"
+        correct: "var myVariable"
     }
 ];
-// var answerCheck = function(){
-//     // var answer = document.querySelector("")
-//     var answer = document.getElementById("id");
-//     console.log(answer);
-    
-//     // if(answer === questionArray[i].correct){
-//     //     return true;
-//     // } else {
-        
-//     //     return false;
-//     // }
-// }
+var answerCheck = function(x,i){
+    if(x === questionArray[i].correct){
+        alert("correct!")
+        // break;
+    } else {
+        alert("wrong");
+        // break;
+    }
+}
 var loadQuestion = function(i){
     
     var question = [];
@@ -73,12 +70,20 @@ var loadQuestion = function(i){
     btn.setAttribute("id", questionArray[i].a)
     btn.addEventListener("click", function(){
         console.log(btn.textContent);
-        console.log(questionArray[i].correct);
-        if(questionArray[i].a === questionArray[i].correct){
+        if(questionArray[i].c === questionArray[i].correct){
             alert("correct!")
         } else {
             alert("wrong");
         }
+    // function(){
+    //     console.log(btn.textContent);
+    //     console.log(questionArray[i].correct);
+    //     if(questionArray[i].a === questionArray[i].correct){
+    //         alert("correct!")
+    //     } else {
+    //         alert("wrong");
+    //     }
+    // }
     });
     questionLoc.appendChild(btn);  
 
@@ -88,6 +93,11 @@ var loadQuestion = function(i){
     btn2.setAttribute("id", questionArray[i].b);
     btn2.addEventListener("click", function(){
         console.log(btn2.textContent);
+        if(questionArray[i].b === questionArray[i].correct){
+            alert("correct!")
+        } else {
+            alert("wrong");
+        }
     });
     questionLoc.appendChild(btn2); 
 
@@ -97,6 +107,11 @@ var loadQuestion = function(i){
     btn3.setAttribute("id", questionArray[i].c);
     btn3.addEventListener("click", function(){
         console.log(btn3.textContent);
+        if(questionArray[i].c === questionArray[i].correct){
+            alert("correct!")
+        } else {
+            alert("wrong");
+        }
     });
     questionLoc.appendChild(btn3); 
 
@@ -105,7 +120,12 @@ var loadQuestion = function(i){
     btn4.className = "start-button";
     btn4.setAttribute("id", questionArray[i].d);
     btn4.addEventListener("click", function(){
-        console.log(btn4.questionArray[i]);
+        console.log(btn4.textContent);
+        if(questionArray[i].d === questionArray[i].correct){
+            alert("correct!")
+        } else {
+            alert("wrong");
+        }
     });
     questionLoc.appendChild(btn4);
     
