@@ -4,6 +4,7 @@ var questionLoc = document.getElementById('question-display');
 var score = 0;
 var goodBad = "";
 var body = document.body;
+var submitButton = document.getElementById('userInput');
 
 // array containing the questions, answers, and which one is correct
 var questionArray = [
@@ -48,10 +49,21 @@ var questionArray = [
         correct: "var myVariable"
     }
 ];
+var highscoreLoad = function(){
+    var submitContainer = document.getElementById("submitContainer");
+    submitContainer.style.display = "none";
+
+    var highScore = {
+        "initials":"initials",
+        "timeLeft":"timeLeft"
+    }
+    localStorage.set('initals', JSON.parse(highScore));
+    console.log(highScore);
+}
+
 // function to check if answer clicked is correct
 var answerCheck = function(event, correctAnswer){
     var click = event.target.textContent
-    console.log("the click value is " + click)
     if(click === correctAnswer){            
         goodBad= "correct";
         return goodBad;
@@ -79,8 +91,7 @@ var loadQuestion = function(i){
     btn.className = "start-button";
     btn.setAttribute("id", questionArray[i].a)
     btn.addEventListener("click", function(event){
-        var result = answerCheck(event, questionArray[i].correct);
-        console.log("the result is " + result);
+        answerCheck(event, questionArray[i].correct);
    
     });
     questionLoc.appendChild(btn);  
@@ -90,9 +101,7 @@ var loadQuestion = function(i){
     btn2.className = "start-button";
     btn2.setAttribute("id", questionArray[i].b);
     btn2.addEventListener("click", function(event){
-        var result = answerCheck(event, questionArray[i].correct);
-        console.log("the result is " + result);
-        return result;
+        answerCheck(event, questionArray[i].correct);
     });
     questionLoc.appendChild(btn2); 
 
@@ -101,8 +110,7 @@ var loadQuestion = function(i){
     btn3.className = "start-button";
     btn3.setAttribute("id", questionArray[i].c);
     btn3.addEventListener("click", function(event){
-        var result = answerCheck(event, questionArray[i].correct);
-        console.log("the result is " + result);
+        answerCheck(event, questionArray[i].correct);
     });
     questionLoc.appendChild(btn3); 
 
@@ -111,8 +119,7 @@ var loadQuestion = function(i){
     btn4.className = "start-button";
     btn4.setAttribute("id", questionArray[i].d);
     btn4.addEventListener("click", function(event){
-        var result = answerCheck(event, questionArray[i].correct);
-        console.log("the result is " + result);
+        answerCheck(event, questionArray[i].correct);
     });
     questionLoc.appendChild(btn4);
     
@@ -159,12 +166,47 @@ var endGame = function(timeLeft,score){
     console.log("timeLeft in endGame " + timeLeft);
 
     // create container to display score
-    var scoreBox = document.createElement('main');
-    scoreBox.className = "container";
-    scoreBox.textContent = ("You answered " + score + " of " + questionArray.length);
-    body.appendChild(scoreBox);
-}
+    var scoreContainer = document.createElement('section');
+    body.appendChild(scoreContainer);
+    scoreContainer.className = "container";
+    scoreContainer.setAttribute("id", "submitContainer");
 
+    var scoreBox = document.createElement('h1');
+    scoreBox.textContent = ("You completed the quiz with a " + score + " of " + questionArray.length + " in " + timeLeft + " seconds.");
+    scoreContainer.appendChild(scoreBox);
+    
+    var inputBox = document.createElement("INPUT")
+    inputBox.className = "input-box";
+    inputBox.setAttribute("type", "text");
+    inputBox.setAttribute("placeholder", "Enter Initials");
+    inputBox.setAttribute("id", "inputBox");
+    scoreContainer.appendChild(inputBox);
+
+    var submitButton = document.createElement("button");
+    submitButton.className = "start-button";
+    submitButton.setAttribute("id", "userInput");
+    submitButton.textContent = "Submit";
+    scoreContainer.appendChild(submitButton);
+
+    // add event listener to the button
+    submitButton.addEventListener("click", function(){
+        storeScore(timeLeft);
+        highscoreLoad();
+        
+    });
+}
+var storeScore = function(timeLeft){
+    var initials = document.getElementById('inputBox').value;
+    var timeLeft = timeLeft
+    console.log("initals = " + initials);
+    if(initials === null || initials === ""){
+        alert("Please Enter Intials")
+    } else {
+        localStorage.setItem('initals', JSON.stringify(initials));
+        localStorage.setItem('timeLeft', JSON.stringify(timeLeft));
+    }
+    
+}
 
 var gameStart = function(){
     // hide the button after starting the quiz
@@ -230,3 +272,4 @@ var gameStart = function(){
 }
 startBtn.addEventListener("click", gameStart);
 // start countdown when button is clicked
+
