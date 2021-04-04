@@ -5,7 +5,7 @@ var score = 0;
 var goodBad = "";
 var body = document.body;
 
-
+// array containing the questions, answers, and which one is correct
 var questionArray = [
     {
         q: "Which is not a valid data type?",
@@ -48,6 +48,7 @@ var questionArray = [
         correct: "var myVariable"
     }
 ];
+// function to check if answer clicked is correct
 var answerCheck = function(event, correctAnswer){
     var click = event.target.textContent
     console.log("the click value is " + click)
@@ -60,11 +61,10 @@ var answerCheck = function(event, correctAnswer){
         
     }
 }
-
+// create elements to load question and add buttons to response answers which then check if it is correct or not.
 var loadQuestion = function(i){
     
     var question = [];
-    
     question[i] = questionArray[i].q;           
     questionLoc.textContent = question[i];
     
@@ -88,16 +88,6 @@ var loadQuestion = function(i){
         var result = answerCheck(event, questionArray[i].correct);
         console.log("the result is " + result);
         return result;
-    // function(){
-    //     console.log(btn2.textContent);
-    //     if(questionArray[i].b === questionArray[i].correct){
-            
-    //         answerCheck = "correct";
-    //         return answerCheck;
-    //     } else {
-    //         answerCheck = "wrong";
-    //         return answerCheck;
-    //     }
     });
     questionLoc.appendChild(btn2); 
 
@@ -108,17 +98,6 @@ var loadQuestion = function(i){
     btn3.addEventListener("click", function(event){
         var result = answerCheck(event, questionArray[i].correct);
         console.log("the result is " + result);
-        // return result;
-    // function(){
-    //     console.log(btn3.textContent);
-    //     if(questionArray[i].c === questionArray[i].correct){
-            
-    //         answerCheck = "correct";
-    //         return answerCheck;
-    //     } else {
-    //         answerCheck = "wrong";
-    //         return answerCheck;
-    //     }
     });
     questionLoc.appendChild(btn3); 
 
@@ -129,16 +108,6 @@ var loadQuestion = function(i){
     btn4.addEventListener("click", function(event){
         var result = answerCheck(event, questionArray[i].correct);
         console.log("the result is " + result);
-        // return result;
-    // function(){
-    //     console.log(btn4.textContent);
-    //     if(questionArray[i].d === questionArray[i].correct){
-    //         answerCheck = "correct";
-    //         return answerCheck;
-    //     } else {
-    //         answerCheck = "wrong";
-    //         return answerCheck;
-    //     }
     });
     questionLoc.appendChild(btn4);
     
@@ -146,9 +115,11 @@ var loadQuestion = function(i){
     
             
 };
+// function to create timer box for countdown
 var timerBoxCreation = function(){
     var timerBox = document.createElement('div');
     timerBox.className = "timer-box";
+    timerBox.setAttribute("id", "timer-container");
     body.appendChild(timerBox);  
     var timerBoxH1 = document.createElement('h1');
     timerBoxH1.setAttribute("id", "countdown");
@@ -156,8 +127,31 @@ var timerBoxCreation = function(){
 
     return timerBoxH1;
 }
+// function to end the game and enter score to save for leaderboard
+var endGame = function(timeLeft,score){
+    // hide timer as game is done
+    var timerBox = document.getElementById("timer-container");
+    timerBox.style.display = "none";
 
+    var questionBox = document.getElementById("question-display");
+    questionBox.style.display = "none";
+
+    // assign score and time to local variable
+    var score = score;
+    var timeLeft = timeLeft;
+    console.log("timeLeft in endGame " + timeLeft);
+
+    // create container to display score
+    var scoreBox = document.createElement('main');
+    scoreBox.className = "container";
+    scoreBox.textContent = ("You answered " + score + " of " + questionArray.length);
+    body.appendChild(scoreBox);
+
+
+
+}
 var gameStart = function(){
+    // hide the button after starting the quiz
     var btnHide = document.getElementById("start-button");
     btnHide.style.display = "none";
     
@@ -170,54 +164,41 @@ var gameStart = function(){
     var timerEl = document.getElementById('countdown');
     //  timer interval to count down each second
         var timeInterval = setInterval(function(){
-            
+            // run timer until time reachs 0
             if(timeLeft > 0){
                 console.log(timeLeft);
                 timerEl.textContent = timeLeft;
                 timerBox.textContent = timeLeft;
                 timeLeft--;              
-                // for(let i = 0; i < questionArray.length;i++){
+                // generate each question as timer runss
                 if(i < questionArray.length){
-                loadQuestion(i)   
-                console.log("goodBad in gameStart" + goodBad);
-
+                    // call function to load question
+                    loadQuestion(i)   
+                    console.log("goodBad in gameStart" + goodBad);
+                    // user can then click answer and addEventLister checks answer
                     if(goodBad === "correct"){
-                        
+                        // add to i to load next question
                         i++;
+                        // add to score
                         score++;
+                        // clear out result returned when answer is checked
                         goodBad = "";
                         console.log("score " + score);
                     } else if(goodBad === "wrong"){
+                        // remove time for incorrect answer
                         timeLeft = timeLeft-10;
+                        // clear out click result 
                         goodBad = "";
+                        // add to i to load next question
                         i++
                     }
                 } else {
-                    timeLeft = 0;
-                }
-
-                
-                // console.log("answer = " + answer);  
-                    // for(var i = 0; i < questionArray.length; i++){
-                    //     loadQuestion(i)
-                    //         
-                    //         debugger;
-                    //         if(goodBad === "correct"){
-                    //             alert("correct");
-                                
-                                
-                    //         } else if(goodBad === "wrong"){
-                    //             timeLeft = timeLeft - 10;
-                                
-                                
-                    //         }   
-                    //     ;
-                                    
-                    // }
-                
-                
+                    endGame(timeLeft, score);
+                    clearInterval(timeInterval);
+                };
                
             } else {
+                // clear interval when timer is done
                 timerEl.textContent = "";
                 timerBox.textContent = timeLeft;
                 clearInterval(timeInterval);
