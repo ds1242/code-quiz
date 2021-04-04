@@ -76,18 +76,6 @@ var loadQuestion = function(i){
     btn.addEventListener("click", function(event){
         var result = answerCheck(event, questionArray[i].correct);
         console.log("the result is " + result);
-        // return result;
-        // if(questionArray[i].a === questionArray[i].correct){
-            
-        //     answerCheck = "correct";
-        //     return answerCheck;
-        // } else {
-            
-        //     answerCheck = "wrong";
-        //     return answerCheck;
-            
-            
-        // }
    
     });
     questionLoc.appendChild(btn);  
@@ -193,20 +181,20 @@ var gameStart = function(){
                 loadQuestion(i)   
                 console.log("goodBad in gameStart" + goodBad);
 
-                if(goodBad === "correct"){
-                    
-                    i++;
-                    score++;
-                    goodBad = "";
-                    console.log("score " + score);
-                } else if(goodBad === "wrong"){
-                    timeLeft = timeLeft-10;
-                    goodBad = "";
-                    i++
+                    if(goodBad === "correct"){
+                        
+                        i++;
+                        score++;
+                        goodBad = "";
+                        console.log("score " + score);
+                    } else if(goodBad === "wrong"){
+                        timeLeft = timeLeft-10;
+                        goodBad = "";
+                        i++
+                    }
+                } else {
+                    timeLeft = 0;
                 }
-            } else {
-                timeLeft = 0;
-            }
 
                 
                 // console.log("answer = " + answer);  
