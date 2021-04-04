@@ -61,6 +61,11 @@ var answerCheck = function(event, correctAnswer){
         
     }
 }
+// notify the player on the result of their answer
+var notifyResult = function(goodBad){
+    var result = goodBad;   
+    resultContainer.textContent = result;    
+}
 // create elements to load question and add buttons to response answers which then check if it is correct or not.
 var loadQuestion = function(i){
     
@@ -111,16 +116,28 @@ var loadQuestion = function(i){
     });
     questionLoc.appendChild(btn4);
     
-    
+
+    // create result container below question buttons
+    resultContainer = document.createElement('div');
+    resultContainer.setAttribute("id",resultContainer);
+    resultContainer.className = "resultContainer";
+    resultContainer.textContent = " ";
+    questionLoc.appendChild(resultContainer);
     
             
 };
 // function to create timer box for countdown
 var timerBoxCreation = function(){
+    var timerSection = document.createElement('section');
+    timerSection.className = "timer-section";
+    timerSection.setAttribute("id", "timer-section");
+    body.appendChild(timerSection);
+
     var timerBox = document.createElement('div');
     timerBox.className = "timer-box";
     timerBox.setAttribute("id", "timer-container");
-    body.appendChild(timerBox);  
+    timerSection.appendChild(timerBox);  
+
     var timerBoxH1 = document.createElement('h1');
     timerBoxH1.setAttribute("id", "countdown");
     timerBox.appendChild(timerBoxH1);
@@ -130,7 +147,7 @@ var timerBoxCreation = function(){
 // function to end the game and enter score to save for leaderboard
 var endGame = function(timeLeft,score){
     // hide timer as game is done
-    var timerBox = document.getElementById("timer-container");
+    var timerBox = document.getElementById("timer-section");
     timerBox.style.display = "none";
 
     var questionBox = document.getElementById("question-display");
@@ -146,10 +163,9 @@ var endGame = function(timeLeft,score){
     scoreBox.className = "container";
     scoreBox.textContent = ("You answered " + score + " of " + questionArray.length);
     body.appendChild(scoreBox);
-
-
-
 }
+
+
 var gameStart = function(){
     // hide the button after starting the quiz
     var btnHide = document.getElementById("start-button");
@@ -177,6 +193,7 @@ var gameStart = function(){
                     console.log("goodBad in gameStart" + goodBad);
                     // user can then click answer and addEventLister checks answer
                     if(goodBad === "correct"){
+                        notifyResult(goodBad);
                         // add to i to load next question
                         i++;
                         // add to score
@@ -185,6 +202,7 @@ var gameStart = function(){
                         goodBad = "";
                         console.log("score " + score);
                     } else if(goodBad === "wrong"){
+                        notifyResult(goodBad);
                         // remove time for incorrect answer
                         timeLeft = timeLeft-10;
                         // clear out click result 
