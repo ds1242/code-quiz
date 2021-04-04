@@ -3,7 +3,7 @@ var timerEl = document.getElementById('countdown');
 var questionLoc = document.getElementById('question-display');
 var score = 0;
 var goodBad = "";
-var body = document.body;
+var body = document.getElementById("body");
 var submitButton = document.getElementById('userInput');
 
 // array containing the questions, answers, and which one is correct
@@ -53,8 +53,9 @@ var highscoreLoad = function(){
     var submitContainer = document.getElementById("submitContainer");
     submitContainer.style.display = "none";
 
-    var highscoreInitials = localStorage.set('initials', JSON.parse(initials));
-    var highscoreTime = localStorage.set("time", JSON.parse(timeLeft));
+    var highscoreInitials = localStorage.getItem('initials');
+    var highscoreTime = localStorage.getItem('timeLeft');
+    
     console.log(highscoreInitials);
     console.log(highscoreTime);
 }
