@@ -53,12 +53,10 @@ var highscoreLoad = function(){
     var submitContainer = document.getElementById("submitContainer");
     submitContainer.style.display = "none";
 
-    var highScore = {
-        "initials":"initials",
-        "timeLeft":"timeLeft"
-    }
-    localStorage.set('initals', JSON.parse(highScore));
-    console.log(highScore);
+    var highscoreInitials = localStorage.set('initials', JSON.parse(initials));
+    var highscoreTime = localStorage.set("time", JSON.parse(timeLeft));
+    console.log(highscoreInitials);
+    console.log(highscoreTime);
 }
 
 // function to check if answer clicked is correct
@@ -198,11 +196,11 @@ var endGame = function(timeLeft,score){
 var storeScore = function(timeLeft){
     var initials = document.getElementById('inputBox').value;
     var timeLeft = timeLeft
-    console.log("initals = " + initials);
+    console.log("initials = " + initials);
     if(initials === null || initials === ""){
-        alert("Please Enter Intials")
+        alert("Please Enter Initials")
     } else {
-        localStorage.setItem('initals', JSON.stringify(initials));
+        localStorage.setItem('initials', JSON.stringify(initials));
         localStorage.setItem('timeLeft', JSON.stringify(timeLeft));
     }
     
