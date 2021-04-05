@@ -6,7 +6,8 @@ var goodBad = "";
 var body = document.getElementById("body");
 var main = document.getElementById("main");
 var submitButton = document.getElementById('userInput');
-var highScoreArr = []
+var highScoreArr = [];
+// var highScoreObj = {};
 highScoreArr = JSON.parse(localStorage.getItem('highScoreArr', highScoreArr));
 // array containing the questions, answers, and which one is correct
 var questionArray = [
@@ -55,8 +56,16 @@ var highscoreLoad = function(){
     var submitContainer = document.getElementById("submitContainer");
     submitContainer.style.display = "none";
 
-    highScoreArr = JSON.parse(localStorage.getItem('highScoreArr', highScoreArr));
-    console.log(highScoreArr);
+    var highScoreReturn = JSON.parse(localStorage.getItem('highScoreArr', highScoreArr));
+    console.log(highScoreReturn.initials);
+    console.log(highScoreReturn);
+
+    var questionLoc = document.createElement('section');
+    questionLoc.className = "container";
+    questionLoc.setAttribute("id", "question-display");
+    questionLoc.textContent = "User: " + highScoreReturn.initials + " Time Score of: " + highScoreReturn.timeLeft;
+    main.appendChild(questionLoc)
+
 }
 
 // function to check if answer clicked is correct
@@ -162,7 +171,7 @@ var endGame = function(timeLeft,score){
     // assign score and time to local variable
     var score = score;
     var timeLeft = timeLeft;
-    console.log("timeLeft in endGame " + timeLeft);
+    
 
     // create container to display score
     var scoreContainer = document.createElement('section');
@@ -196,13 +205,18 @@ var endGame = function(timeLeft,score){
 }
 var storeScore = function(timeLeft){
     var initials = document.getElementById('inputBox').value;
-    var timeLeft = timeLeft
+    var timeLeft = timeLeft;
     console.log("initials = " + initials);
+    console.log("timeLeft in storeScore " + timeLeft);
     if(initials === null || initials === ""){
-        alert("Please Enter Initials")
+        // alert("Please Enter Initials")
+        storeScore(timeLeft);
     } else {
-        highScoreArr.push({userinitials: initials, timeScore: timeLeft});
-        localStorage.setItem('highScoreArr', JSON.stringify(highScoreArr));
+        highScoreArr = [];
+        highScoreObj = {initials, timeLeft};
+        console.log("highScoreObj " + JSON.stringify(highScoreObj));
+        highScoreArr.push(JSON.stringify(highScoreObj));
+        localStorage.setItem('highScoreArr', highScoreArr);
     }
     
 }
