@@ -1,6 +1,7 @@
 var startBtn = document.getElementById('start-button');
 var timerEl = document.getElementById('countdown');
 var questionLoc = document.getElementById('question-display');
+var footer = document.getElementById('footer');
 var score = 0;
 var goodBad = "";
 var body = document.getElementById("body");
@@ -146,16 +147,16 @@ var timerBoxCreation = function(){
     var timerSection = document.createElement('section');
     timerSection.className = "timer-section";
     timerSection.setAttribute("id", "timer-section");
-    main.appendChild(timerSection);
+    header.appendChild(timerSection);
 
-    var timerBox = document.createElement('div');
-    timerBox.className = "timer-box";
-    timerBox.setAttribute("id", "timer-container");
-    timerSection.appendChild(timerBox);  
+    // var timerBox = document.createElement('div');
+    // timerBox.className = "timer-box";
+    // timerBox.setAttribute("id", "timer-container");
+    // timerSection.appendChild(timerBox);  
 
     var timerBoxH1 = document.createElement('h1');
     timerBoxH1.setAttribute("id", "countdown");
-    timerBox.appendChild(timerBoxH1);
+    timerSection.appendChild(timerBoxH1);
 
     return timerBoxH1;
 }
@@ -213,6 +214,7 @@ var storeScore = function(timeLeft){
         storeScore(timeLeft);
     } else {
         highScoreArr = [];
+        highScoreObj = {};
         highScoreObj = {initials, timeLeft};
         console.log("highScoreObj " + JSON.stringify(highScoreObj));
         highScoreArr.push(JSON.stringify(highScoreObj));
@@ -284,6 +286,17 @@ var gameStart = function(){
     
 }
 var gameLoad = function(){
+
+    // var header = document.createElement("header");
+    // header.setAttribute("id", header);
+    // main.appendChild(header);
+    var highScoreLink = document.createElement("button");
+    highScoreLink.className = "start-button";
+    highScoreLink.textContent = "High Score";
+    header.appendChild(highScoreLink);
+
+    highScoreLink.addEventListener("click", highscoreLoad) 
+
     // create container to hold welcome message
     var section = document.createElement('section');
     section.className = "container";
@@ -312,6 +325,10 @@ var gameLoad = function(){
     questionLoc.appendChild(startBtn);
 
     startBtn.addEventListener("click", gameStart);
+
+
+    
+
 }
 gameLoad();
 
