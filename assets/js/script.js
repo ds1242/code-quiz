@@ -55,7 +55,10 @@ var questionArray = [
 ];
 var highscoreLoad = function(){
     var submitContainer = document.getElementById("submitContainer");
-    submitContainer.style.display = "none";
+    if(typeof(element) != 'undefined' && element != null){
+        submitContainer.style.display = "none";
+    }
+    
 
     var highScoreReturn = JSON.parse(localStorage.getItem('highScoreArr', highScoreArr));
     console.log(highScoreReturn.initials);
@@ -67,6 +70,16 @@ var highscoreLoad = function(){
     questionLoc.textContent = "User: " + highScoreReturn.initials + " Time Score of: " + highScoreReturn.timeLeft;
     main.appendChild(questionLoc)
 
+    var buttonCheck = document.getElementById("start-button");
+    if(typeof(element) != 'undefined' && element != null){
+        var startBtn = document.createElement("button");
+        startBtn.className = "start-button";
+        startBtn.setAttribute("id", "start-button");
+        startBtn.textContent = "Start Quiz"
+        questionLoc.appendChild(startBtn);
+
+        startBtn.addEventListener("click", gameStart);
+        }
 }
 
 // function to check if answer clicked is correct
@@ -91,7 +104,9 @@ var loadQuestion = function(i){
     
     var question = [];
     question[i] = questionArray[i].q;    
-    var questionLoc = document.getElementById("question-display");       
+    var questionLoc = document.getElementById("question-display");  
+    questionLoc.style.visibility = "visible";     
+    questionLoc.removeAttribute("display");
     questionLoc.textContent = question[i];
     
 
@@ -214,7 +229,7 @@ var storeScore = function(timeLeft){
         storeScore(timeLeft);
     } else {
         highScoreArr = [];
-        highScoreObj = {};
+        // highScoreObj = {};
         highScoreObj = {initials, timeLeft};
         console.log("highScoreObj " + JSON.stringify(highScoreObj));
         highScoreArr.push(JSON.stringify(highScoreObj));
@@ -226,7 +241,7 @@ var storeScore = function(timeLeft){
 var gameStart = function(){
     // hide the button after starting the quiz
     var btnHide = document.getElementById("start-button");
-    btnHide.style.display = "none";
+    btnHide.style.visibility = "hidden";
     
     // set start time
     var timeLeft = 75;
@@ -247,7 +262,7 @@ var gameStart = function(){
                 if(i < questionArray.length){
                     // call function to load question
                     loadQuestion(i)   
-                    console.log("goodBad in gameStart" + goodBad);
+                    
                     // user can then click answer and addEventLister checks answer
                     if(goodBad === "correct"){
                         notifyResult(goodBad);
@@ -257,7 +272,7 @@ var gameStart = function(){
                         score++;
                         // clear out result returned when answer is checked
                         goodBad = "";
-                        console.log("score " + score);
+                        
                     } else if(goodBad === "wrong"){
                         notifyResult(goodBad);
                         // remove time for incorrect answer
@@ -277,7 +292,8 @@ var gameStart = function(){
                 timerEl.textContent = "";
                 timerBox.textContent = timeLeft;
                 clearInterval(timeInterval);
-                console.log("timerel is done " +timerEl);
+                endGame(timeLeft, score);
+                
             }
             
         }, 1000);
