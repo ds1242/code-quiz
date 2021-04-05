@@ -54,31 +54,33 @@ var questionArray = [
     }
 ];
 var highscoreLoad = function(){
-    var submitContainer = document.getElementById("submitContainer");
-    if(typeof(element) != 'undefined' && element != null){
-        submitContainer.style.display = "none";
+    
+    if(document.getElementById("submitContainer")){
+        var submitContainer = document.getElementById("submitContainer");
+        submitContainer.style.visibility = "none";
     }
     
 
     var highScoreReturn = JSON.parse(localStorage.getItem('highScoreArr', highScoreArr));
-    console.log(highScoreReturn.initials);
     console.log(highScoreReturn);
 
     var questionLoc = document.createElement('section');
     questionLoc.className = "container";
     questionLoc.setAttribute("id", "question-display");
-    questionLoc.textContent = "User: " + highScoreReturn.initials + " Time Score of: " + highScoreReturn.timeLeft;
+    questionLoc.textContent = "User: " + highScoreReturn.initials + " has the best score with a time score of: " + highScoreReturn.timeLeft;
     main.appendChild(questionLoc)
 
-    var buttonCheck = document.getElementById("start-button");
-    if(typeof(element) != 'undefined' && element != null){
-        var startBtn = document.createElement("button");
-        startBtn.className = "start-button";
-        startBtn.setAttribute("id", "start-button");
-        startBtn.textContent = "Start Quiz"
-        questionLoc.appendChild(startBtn);
+    // Check if loading high scores prior to playing game to avoid loading the start button twice
+    if(document.getElementById("start-button")){
+            return;
+    }else {
+            var startBtn = document.createElement("button");
+            startBtn.className = "start-button";
+            startBtn.setAttribute("id", "start-button");
+            startBtn.textContent = "Start Quiz"
+            questionLoc.appendChild(startBtn);
 
-        startBtn.addEventListener("click", gameStart);
+            startBtn.addEventListener("click", gameStart);
         }
 }
 
@@ -101,7 +103,10 @@ var notifyResult = function(goodBad){
 }
 // create elements to load question and add buttons to response answers which then check if it is correct or not.
 var loadQuestion = function(i){
-    
+    // if(document.getElementById("submitContainer")){
+    //     var submitContainer = document.getElementById("submitContainer");
+    //     submitContainer.style.visibility = "hidden";
+    // }
     var question = [];
     question[i] = questionArray[i].q;    
     var questionLoc = document.getElementById("question-display");  
@@ -222,19 +227,22 @@ var endGame = function(timeLeft,score){
 var storeScore = function(timeLeft){
     var initials = document.getElementById('inputBox').value;
     var timeLeft = timeLeft;
-    console.log("initials = " + initials);
-    console.log("timeLeft in storeScore " + timeLeft);
-    if(initials === null || initials === ""){
-        // alert("Please Enter Initials")
-        storeScore(timeLeft);
-    } else {
+    var highScore = JSON.parse(localStorage.getItem('highScoreArr', highScoreArr));
+
+    console.log(highScore.timeLeft);
+
+    if(timeLeft > highScore.timeLeft ){
         highScoreArr = [];
         // highScoreObj = {};
         highScoreObj = {initials, timeLeft};
         console.log("highScoreObj " + JSON.stringify(highScoreObj));
         highScoreArr.push(JSON.stringify(highScoreObj));
         localStorage.setItem('highScoreArr', highScoreArr);
+    } else {
+        alert("not a better score");
     }
+
+    
     
 }
 
