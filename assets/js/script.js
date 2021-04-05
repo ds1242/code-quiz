@@ -5,7 +5,8 @@ var score = 0;
 var goodBad = "";
 var body = document.getElementById("body");
 var submitButton = document.getElementById('userInput');
-
+var highScoreArr = []
+highScoreArr = JSON.parse(localStorage.getItem('highScoreArr', highScoreArr));
 // array containing the questions, answers, and which one is correct
 var questionArray = [
     {
@@ -53,11 +54,8 @@ var highscoreLoad = function(){
     var submitContainer = document.getElementById("submitContainer");
     submitContainer.style.display = "none";
 
-    var highscoreInitials = localStorage.getItem('initials');
-    var highscoreTime = localStorage.getItem('timeLeft');
-    
-    console.log(highscoreInitials);
-    console.log(highscoreTime);
+    highScoreArr = JSON.parse(localStorage.getItem('highScoreArr', highScoreArr));
+    console.log(highScoreArr);
 }
 
 // function to check if answer clicked is correct
@@ -201,8 +199,8 @@ var storeScore = function(timeLeft){
     if(initials === null || initials === ""){
         alert("Please Enter Initials")
     } else {
-        localStorage.setItem('initials', JSON.stringify(initials));
-        localStorage.setItem('timeLeft', JSON.stringify(timeLeft));
+        highScoreArr.push({userinitials: initials, timeScore: timeLeft});
+        localStorage.setItem('highScoreArr', JSON.stringify(highScoreArr));
     }
     
 }
@@ -269,6 +267,8 @@ var gameStart = function(){
 
     
 }
+
 startBtn.addEventListener("click", gameStart);
+
 // start countdown when button is clicked
 
