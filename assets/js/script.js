@@ -167,6 +167,7 @@ var timerBoxCreation = function(){
     var timerSection = document.createElement('section');
     timerSection.className = "timer-section";
     timerSection.setAttribute("id", "timer-section");
+    timerSection.setAttribute("margin-left", "auto");
     header.appendChild(timerSection);
 
     // var timerBox = document.createElement('div');
@@ -317,6 +318,7 @@ var gameLoad = function(){
     var highScoreLink = document.createElement("button");
     highScoreLink.className = "start-button";
     highScoreLink.textContent = "High Score";
+    // highScoreLink.setAttribute("margin", "left");
     header.appendChild(highScoreLink);
 
     highScoreLink.addEventListener("click", highscoreLoad) 

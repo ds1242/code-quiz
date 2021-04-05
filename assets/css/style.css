@@ -17,7 +17,8 @@ body{
 header{
     display:flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: space-between;
+    align-items: flex-start;
     flex-grow: 1;
 }
 .container{
