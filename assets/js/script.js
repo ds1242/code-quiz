@@ -4,6 +4,7 @@ var questionLoc = document.getElementById('question-display');
 var score = 0;
 var goodBad = "";
 var body = document.getElementById("body");
+var main = document.getElementById("main");
 var submitButton = document.getElementById('userInput');
 var highScoreArr = []
 highScoreArr = JSON.parse(localStorage.getItem('highScoreArr', highScoreArr));
@@ -79,7 +80,8 @@ var notifyResult = function(goodBad){
 var loadQuestion = function(i){
     
     var question = [];
-    question[i] = questionArray[i].q;           
+    question[i] = questionArray[i].q;    
+    var questionLoc = document.getElementById("question-display");       
     questionLoc.textContent = question[i];
     
 
@@ -135,7 +137,7 @@ var timerBoxCreation = function(){
     var timerSection = document.createElement('section');
     timerSection.className = "timer-section";
     timerSection.setAttribute("id", "timer-section");
-    body.appendChild(timerSection);
+    main.appendChild(timerSection);
 
     var timerBox = document.createElement('div');
     timerBox.className = "timer-box";
@@ -164,7 +166,7 @@ var endGame = function(timeLeft,score){
 
     // create container to display score
     var scoreContainer = document.createElement('section');
-    body.appendChild(scoreContainer);
+    main.appendChild(scoreContainer);
     scoreContainer.className = "container";
     scoreContainer.setAttribute("id", "submitContainer");
 
@@ -267,8 +269,37 @@ var gameStart = function(){
 
     
 }
+var gameLoad = function(){
+    // create container to hold welcome message
+    var section = document.createElement('section');
+    section.className = "container";
+    // welcome to page h1
+    var h1 = document.createElement('h1');
+    h1.textContent = "Welcome to this JavaScript Code Quiz";
+    // instructions below
+    var p = document.createElement('p');
+    p.textContent = "Click start to begin the quick. You have 75 seconds to answer all the questions.  Each incorrect question will reduce your total time by 10 seconds";
+    // append to body of document
+    main.appendChild(section);
+    section.appendChild(h1);
+    section.appendChild(p);
 
-startBtn.addEventListener("click", gameStart);
+    // create start game button
+    var questionLoc = document.createElement('section');
+    questionLoc.className = "container";
+    questionLoc.setAttribute("id", "question-display");
+
+    main.appendChild(questionLoc)
+
+    var startBtn = document.createElement("button");
+    startBtn.className = "start-button";
+    startBtn.setAttribute("id", "start-button");
+    startBtn.textContent = "Start Quiz"
+    questionLoc.appendChild(startBtn);
+
+    startBtn.addEventListener("click", gameStart);
+}
+gameLoad();
 
 // start countdown when button is clicked
 
