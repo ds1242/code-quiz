@@ -83,14 +83,21 @@ var clearDOM = function(){
 
 }
 var highscoreLoad = function(){
-       
+
+    var submitContainer = document.getElementById("submitContainer")
+    if(submitContainer){
+        submitContainer.remove();  
+    };
     // get current high score time
     var highScoreReturn = JSON.parse(localStorage.getItem('highScoreArr', highScoreArr));
-    console.log(highScoreReturn);
-
-    var questionLoc = document.createElement('section');
-    questionLoc.className = "container";
-    questionLoc.setAttribute("id", "score-display");
+    
+    if(document.getElementById("score-display")){
+        return;
+    } else{
+        var questionLoc = document.createElement('section');
+        questionLoc.className = "container";
+        questionLoc.setAttribute("id", "score-display");
+    }
     
     
     
@@ -113,16 +120,17 @@ var highscoreLoad = function(){
 
             startBtn.addEventListener("click", clearDOM);
 
-
+            // button to clear high score
             var clearBtn = document.createElement("button");
             clearBtn.className="start-button";
             clearBtn.setAttribute("id", "clear-button");
             clearBtn.textContent = "Clear High Score";
             questionLoc.appendChild(clearBtn);
 
+            // eventListener to clear the local storage for the high scores
             clearBtn.addEventListener("click", function(){
                 localStorage.clear();
-                alert("storage cleared");
+                alert("High Scores Cleared!");
                 clearDOM();
             })
         }
@@ -270,6 +278,7 @@ var endGame = function(timeLeft,score){
 }
 var storeScore = function(timeLeft){
     var initials = document.getElementById('inputBox').value;
+    initials = initials.toUpperCase();
     var timeLeft = timeLeft;
     var highScore = JSON.parse(localStorage.getItem('highScoreArr', highScoreArr));
 
@@ -365,16 +374,17 @@ var gameStart = function(){
     
 }
 var gameLoad = function(){
-    // var main = document.createElement("main");
-    // body.appendChild(main);
-
+    // loading content on the to DOM
+    // reset score value to 0 
+    score = 0;
+    // load high score button to DOM
     var header = document.createElement("header");
     header.setAttribute("id", "header");
     main.appendChild(header);
     var highScoreLink = document.createElement("button");
-    highScoreLink.className = "start-button";
+    highScoreLink.className = "high-score";
     highScoreLink.textContent = "High Score";
-    // highScoreLink.setAttribute("margin", "left");
+    
     header.appendChild(highScoreLink);
 
     highScoreLink.addEventListener("click", highscoreLoad) 
@@ -413,7 +423,9 @@ var gameLoad = function(){
     
 
 }
+
+// call gameLoad to load all items to run the game the DOM
 gameLoad();
 
-// start countdown when button is clicked
+
 
