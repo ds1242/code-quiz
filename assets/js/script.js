@@ -62,10 +62,13 @@ var clearDOM = function(){
     otherObj.remove();  
     var questionDisplayRemove = document.getElementById("question-display");
     questionDisplayRemove.remove();
-    var questionDisplayRemove2 = document.getElementById("question-display");
+    var questionDisplayRemove2 = document.getElementById("score-display");
     questionDisplayRemove2.remove();
-
-    gameStart();
+    var header = document.getElementById("header");
+    header.remove();
+    var welcomeRemove = document.getElementById("welcome");
+    welcomeRemove.remove();
+    gameLoad();
 
 }
 var highscoreLoad = function(){
@@ -81,7 +84,7 @@ var highscoreLoad = function(){
 
     var questionLoc = document.createElement('section');
     questionLoc.className = "container";
-    questionLoc.setAttribute("id", "question-display");
+    questionLoc.setAttribute("id", "score-display");
     questionLoc.textContent = "User: " + highScoreReturn.initials + " has the best score with a time score of: " + highScoreReturn.timeLeft;
     main.appendChild(questionLoc)
 
@@ -170,7 +173,7 @@ var loadQuestion = function(i){
 
     // create result container below question buttons
     resultContainer = document.createElement('div');
-    resultContainer.setAttribute("id",resultContainer);
+    resultContainer.setAttribute("id","resultContainer");
     resultContainer.className = "resultContainer";
     resultContainer.textContent = " ";
     questionLoc.appendChild(resultContainer);
@@ -200,7 +203,7 @@ var timerBoxCreation = function(){
 var endGame = function(timeLeft,score){
     // hide timer as game is done
     var timerBox = document.getElementById("timer-section");
-    timerBox.style.display = "none";
+    timerBox.style.visibility = "hidden";
 
     var questionBox = document.getElementById("question-display");
     questionBox.style.visibility = "hidden";
@@ -334,7 +337,7 @@ var gameLoad = function(){
     // body.appendChild(main);
 
     var header = document.createElement("header");
-    header.setAttribute("id", header);
+    header.setAttribute("id", "header");
     main.appendChild(header);
     var highScoreLink = document.createElement("button");
     highScoreLink.className = "start-button";
@@ -347,6 +350,7 @@ var gameLoad = function(){
     // create container to hold welcome message
     var section = document.createElement('section');
     section.className = "container";
+    section.setAttribute("id", "welcome");
     // welcome to page h1
     var h1 = document.createElement('h1');
     h1.textContent = "Welcome to this JavaScript Code Quiz";
