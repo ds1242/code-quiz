@@ -7,8 +7,13 @@ var goodBad = "";
 var body = document.getElementById("body");
 var main = document.getElementById("main");
 var submitButton = document.getElementById('userInput');
-var highScoreArr = [];
-// var highScoreObj = {};
+var highScoreArr = [
+    {
+        initials: "",
+        timeLeft:0
+    }
+];
+
 highScoreArr = JSON.parse(localStorage.getItem('highScoreArr', highScoreArr));
 // array containing the questions, answers, and which one is correct
 var questionArray = [
@@ -59,32 +64,41 @@ var clearDOM = function(){
     // var header = document.getElementById("header")
     // header.remove();
     var otherObj = document.getElementById("submitContainer")
-    otherObj.remove();  
-    
+    if(otherObj){
+        otherObj.remove();  
+    };
     var questionDisplayRemove2 = document.getElementById("score-display");
-    questionDisplayRemove2.remove();
+    if(questionDisplayRemove2){
+        questionDisplayRemove2.remove();
+    };
     var header = document.getElementById("header");
-    header.remove();
+    if(header){
+        header.remove();
+    }
     var welcomeRemove = document.getElementById("welcome");
-    welcomeRemove.remove();
+    if(welcomeRemove){
+        welcomeRemove.remove();
+    }
     gameLoad();
 
 }
 var highscoreLoad = function(){
-    
-    // if(document.getElementById("submitContainer")){
-    //     var submitContainer = document.getElementById("submitContainer");
-    //     submitContainer.remove();
-    // }
-    
-
+       
+    // get current high score time
     var highScoreReturn = JSON.parse(localStorage.getItem('highScoreArr', highScoreArr));
     console.log(highScoreReturn);
 
     var questionLoc = document.createElement('section');
     questionLoc.className = "container";
     questionLoc.setAttribute("id", "score-display");
-    questionLoc.textContent = "User: " + highScoreReturn.initials + " has the best score with a time score of: " + highScoreReturn.timeLeft;
+    
+    
+    
+    if(highScoreReturn === null){
+        questionLoc.textContent = "No High Score";
+    } else {        
+        questionLoc.textContent = "User: " + highScoreReturn.initials + " has the best score with a time score of: " + highScoreReturn.timeLeft;
+    }
     main.appendChild(questionLoc)
 
     // Check if loading high scores prior to playing game to avoid loading the start button twice
@@ -94,10 +108,23 @@ var highscoreLoad = function(){
             var startBtn = document.createElement("button");
             startBtn.className = "start-button";
             startBtn.setAttribute("id", "start-button");
-            startBtn.textContent = "Start Quiz"
+            startBtn.textContent = "Restart Quiz"
             questionLoc.appendChild(startBtn);
 
             startBtn.addEventListener("click", clearDOM);
+
+
+            var clearBtn = document.createElement("button");
+            clearBtn.className="start-button";
+            clearBtn.setAttribute("id", "clear-button");
+            clearBtn.textContent = "Clear High Score";
+            questionLoc.appendChild(clearBtn);
+
+            clearBtn.addEventListener("click", function(){
+                localStorage.clear();
+                alert("storage cleared");
+                clearDOM();
+            })
         }
 }
 
@@ -120,10 +147,7 @@ var notifyResult = function(goodBad){
 }
 // create elements to load question and add buttons to response answers which then check if it is correct or not.
 var loadQuestion = function(i){
-    // if(document.getElementById("submitContainer")){
-    //     var submitContainer = document.getElementById("submitContainer");
-    //     submitContainer.style.visibility = "hidden";
-    // }
+    // load question for user to answer
     var question = [];
     question[i] = questionArray[i].q;    
     var questionLoc = document.getElementById("question-display");  
@@ -131,7 +155,7 @@ var loadQuestion = function(i){
     questionLoc.removeAttribute("display");
     questionLoc.textContent = question[i];
     
-
+    // create first button answer from the question array
     var btn = document.createElement("button");
     btn.textContent = questionArray[i].a;
     btn.className = "start-button";
@@ -142,6 +166,7 @@ var loadQuestion = function(i){
     });
     questionLoc.appendChild(btn);  
 
+    // create second button from question array
     var btn2 = document.createElement("button");
     btn2.textContent = questionArray[i].b;    
     btn2.className = "start-button";
@@ -151,6 +176,7 @@ var loadQuestion = function(i){
     });
     questionLoc.appendChild(btn2); 
 
+    // create third button from question array
     var btn3 = document.createElement("button");
     btn3.textContent = questionArray[i].c;
     btn3.className = "start-button";
@@ -160,6 +186,7 @@ var loadQuestion = function(i){
     });
     questionLoc.appendChild(btn3); 
 
+    // create fourth button to answer with from question array
     var btn4 = document.createElement("button");
     btn4.textContent = questionArray[i].d;
     btn4.className = "start-button";
@@ -186,11 +213,6 @@ var timerBoxCreation = function(){
     timerSection.setAttribute("id", "timer-section");
     timerSection.setAttribute("margin-left", "auto");
     header.appendChild(timerSection);
-
-    // var timerBox = document.createElement('div');
-    // timerBox.className = "timer-box";
-    // timerBox.setAttribute("id", "timer-container");
-    // timerSection.appendChild(timerBox);  
 
     var timerBoxH1 = document.createElement('h1');
     timerBoxH1.setAttribute("id", "countdown");
@@ -237,9 +259,13 @@ var endGame = function(timeLeft,score){
 
     // add event listener to the button
     submitButton.addEventListener("click", function(){
+        if(document.getElementById('inputBox').value === ""){
+            alert("Please Enter Your Initials");
+            return;
+        } else{
         storeScore(timeLeft);
         highscoreLoad();
-        
+        }
     });
 }
 var storeScore = function(timeLeft){
@@ -247,9 +273,9 @@ var storeScore = function(timeLeft){
     var timeLeft = timeLeft;
     var highScore = JSON.parse(localStorage.getItem('highScoreArr', highScoreArr));
 
-    console.log(highScore.timeLeft);
+    // console.log(highScore.timeLeft);
 
-    if(timeLeft > highScore.timeLeft ){
+    if(highScore === null || timeLeft > highScore.timeLeft ){
         highScoreArr = [];
         // highScoreObj = {};
         highScoreObj = {initials, timeLeft};
@@ -257,7 +283,7 @@ var storeScore = function(timeLeft){
         highScoreArr.push(JSON.stringify(highScoreObj));
         localStorage.setItem('highScoreArr', highScoreArr);
     } else {
-        alert("not a better score");
+        alert("Unfortunately Not A New High Score.  Please Play Again!");
     }
 
     
@@ -268,9 +294,15 @@ var gameStart = function(){
     // hide the button after starting the quiz
     var btnHide = document.getElementById("start-button");
     btnHide.style.visibility = "hidden";
+    // remove any submitContainer if user restarts the game or comes from the highscore page
     if(document.getElementById('submitContainer')){
         var remove1 = document.getElementById('submitContainer')
         remove1.remove();
+    }
+    // remove the score display container if user comes from the highscore page or restarts the game
+    if(document.getElementById('score-display')){
+        var remove2 = document.getElementById('score-display');
+        remove2.remove();
     }
     
     // set start time
