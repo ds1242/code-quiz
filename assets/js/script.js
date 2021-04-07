@@ -60,8 +60,7 @@ var clearDOM = function(){
     // header.remove();
     var otherObj = document.getElementById("submitContainer")
     otherObj.remove();  
-    var questionDisplayRemove = document.getElementById("question-display");
-    questionDisplayRemove.remove();
+    
     var questionDisplayRemove2 = document.getElementById("score-display");
     questionDisplayRemove2.remove();
     var header = document.getElementById("header");
@@ -206,7 +205,7 @@ var endGame = function(timeLeft,score){
     timerBox.style.visibility = "hidden";
 
     var questionBox = document.getElementById("question-display");
-    questionBox.style.visibility = "hidden";
+    questionBox.remove();
 
     // assign score and time to local variable
     var score = score;
@@ -289,9 +288,10 @@ var gameStart = function(){
                 timerEl.textContent = timeLeft;
                 timerBox.textContent = timeLeft;
                 timeLeft--;              
-                // generate each question as timer runss
+                // generate each question as timer runs
                 if(i < questionArray.length){
                     // call function to load question
+                    
                     loadQuestion(i)   
                     
                     // user can then click answer and addEventLister checks answer
