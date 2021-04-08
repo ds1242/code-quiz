@@ -65,8 +65,8 @@ https://ds1242.github.io/code-quiz/
 
 #### If user clicks the high score button from the opening page and a high score exists
 
-<img width="700" src="./assets/images/highScoreExists.jpg" alt="displays current highest score">
+<img width="700" src="./assets/images/highScoreExists.png" alt="displays current highest score">
 
 #### if user clicks the high score button from the opening page and no current high score exists
 
-<img width="700" src="./assets/images/noScoreExists.png" alt="displays message that no high score exists">
+<img width="700" src="./assets/images/noScoreExists.jpg" alt="displays message that no high score exists">
