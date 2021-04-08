@@ -69,4 +69,4 @@ https://ds1242.github.io/code-quiz/
 
 #### if user clicks the high score button from the opening page and no current high score exists
 
-<img width="700" src="./assets/images/noScoreExists.jpg" alt="displays message that no high score exists">
+<img width="700" src="./assets/images/noHighScore.jpg" alt="displays message that no high score exists">
