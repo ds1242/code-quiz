@@ -277,26 +277,21 @@ var endGame = function(timeLeft,score){
     });
 }
 var storeScore = function(timeLeft){
+    // function to store the score into localStorage
     var initials = document.getElementById('inputBox').value;
     initials = initials.toUpperCase();
     var timeLeft = timeLeft;
+    // pull score from localStorage to compare
     var highScore = JSON.parse(localStorage.getItem('highScoreArr', highScoreArr));
-
-    // console.log(highScore.timeLeft);
-
+    // if no current high score or if new timescore is higher then update local storage
     if(highScore === null || timeLeft > highScore.timeLeft ){
         highScoreArr = [];
-        // highScoreObj = {};
         highScoreObj = {initials, timeLeft};
-        console.log("highScoreObj " + JSON.stringify(highScoreObj));
         highScoreArr.push(JSON.stringify(highScoreObj));
         localStorage.setItem('highScoreArr', highScoreArr);
     } else {
         alert("Unfortunately Not A New High Score.  Please Play Again!");
-    }
-
-    
-    
+    }    
 }
 
 var gameStart = function(){
